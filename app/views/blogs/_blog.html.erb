@@ -1,0 +1,77 @@
+<div id="<%= dom_id blog %>">
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Title:</strong>
+    <%= blog.title %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Body:</strong>
+    <%= blog.body %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Author:</strong>
+    <%= blog.author %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Slug:</strong>
+    <%= blog.slug %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Published at:</strong>
+    <%= blog.published_at %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Category:</strong>
+    <%= blog.category %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Featured image:</strong>
+    <%= blog.featured_image %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Status:</strong>
+    <%= blog.status %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Views:</strong>
+    <%= blog.views %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Likes:</strong>
+    <%= blog.likes %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Comments count:</strong>
+    <%= blog.comments_count %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Meta title:</strong>
+    <%= blog.meta_title %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Meta description:</strong>
+    <%= blog.meta_description %>
+  </p>
+
+  <p class="my-5">
+    <strong class="block font-medium mb-1">Meta keywords:</strong>
+    <%= blog.meta_keywords %>
+  </p>
+
+  <% if action_name != "show" %>
+    <%= link_to "Show this blog", blog_path(blog.slug), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+    <%= link_to "Edit this blog", edit_blog_path(blog.slug), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
+    <hr class="mt-6">
+<% end %>
+</div>
