@@ -1,15 +1,22 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
-    <%= render @blog %>
-
-    <%= link_to "Edit this blog", edit_blog_path(@blog), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this blog", blog_path(@blog), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+<div class="mx-auto md:w-2/3 w-full">
+  <% if notice.present? %>
+    <div class="bg-green-100 text-green-700 py-2 px-4 mb-5 rounded-lg">
+      <%= notice %>
     </div>
-    <%= link_to "Back to blogs", blogs_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  <% end %>
+
+  <div class="bg-white shadow-md rounded-lg p-6 mb-6">
+    <%= render @blog %>
+  </div>
+
+  <% if @form.present? %>
+    <h2>Related Form</h2>
+    <%= render partial: 'documents/document', locals: { document: @document } %>
+  <% end %>
+
+  <div class="flex items-center">
+    <%= link_to "Edit", edit_blog_path(@blog), class: "btn btn-gray mr-2" %>
+    <%= button_to "Delete", blog_path(@blog), method: :delete, data: { confirm: "Are you sure you want to delete this blog?" }, class: "btn btn-red" %>
+    <%= link_to "Back to Blogs", blogs_path, class: "btn btn-blue ml-auto" %>
   </div>
 </div>

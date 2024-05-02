@@ -9,7 +9,9 @@ class BlogsController < ApplicationController
   # GET /blogs/1 or /blogs/1.json
   def show
     @blog = Blog.find_by(slug: params[:slug])
+    @documents = @blog.documents
   end
+  
 
   # GET /blogs/new
   def new
@@ -18,6 +20,7 @@ class BlogsController < ApplicationController
 
   # GET /blogs/1/edit
   def edit
+    @blog = Blog.find(params[:slug])
   end
 
   # POST /blogs or /blogs.json
@@ -50,6 +53,7 @@ class BlogsController < ApplicationController
 
   # DELETE /blogs/1 or /blogs/1.json
   def destroy
+    @blog = Blog.find(params[:slug])
     @blog.destroy!
 
     respond_to do |format|

@@ -1,14 +1,27 @@
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+    <div class="bg-green-100 text-green-700 py-2 px-4 mb-5 rounded-lg">
+      <%= notice %>
+    </div>
   <% end %>
 
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Blog</h1>
-    <%= link_to "New blog", new_blog_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="font-bold text-4xl">Welcome to Our Blog</h1>
+    <%= link_to "New Blog", new_blog_path, class: "btn btn-blue" %>
   </div>
 
-  <div id="blogs" class="min-w-full">
-    <%= render @blogs %>
+  <div id="blogs" class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <% @blogs.each do |blog| %>
+      <div class="bg-white shadow-md rounded-lg overflow-hidden">
+        <div class="p-6">
+          <h2 class="text-xl font-semibold text-gray-800 mb-2"><%= blog.title %></h2>
+          <p class="text-gray-600 mb-4"><%= blog.created_at.strftime("%B %d, %Y") %></p>
+          <p class="text-gray-700"><%= truncate(blog.body, length: 150) %></p>
+        </div>
+        <div class="bg-gray-100 px-6 py-4">
+          <%= link_to "Read More", blog_path(blog.slug), class: "btn btn-blue" %>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

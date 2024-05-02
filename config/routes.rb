@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
+  resources :documents
   resources :blogs, param: :slug, path: '/blog'
+  resources :documents, only: [:index] do
+    member do
+      get 'download'
+    end
+  end
   root 'public#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
