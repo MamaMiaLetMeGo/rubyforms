@@ -2,4 +2,6 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "tinymce/tinymce"
-  
+//= require jquery
+//= require jquery_ujs
+//= require delete_confirmation

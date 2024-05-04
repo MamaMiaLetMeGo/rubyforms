@@ -6,7 +6,12 @@
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Body:</strong>
-    <%= blog.body %>
+    <% if blog.body.present? %>
+      <%= blog.body.html_safe %>
+    <% else %>
+      <!-- Handle case where body is nil or empty -->
+      No content available.
+    <% end %>
   </p>
 
   <p class="my-5">
@@ -73,5 +78,5 @@
     <%= link_to "Show this blog", blog_path(blog.slug), class: "rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     <%= link_to "Edit this blog", edit_blog_path(blog.slug), class: "rounded-lg py-3 ml-2 px-5 bg-gray-100 inline-block font-medium" %>
     <hr class="mt-6">
-<% end %>
+  <% end %>
 </div>

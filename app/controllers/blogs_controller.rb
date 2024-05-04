@@ -1,17 +1,15 @@
 class BlogsController < ApplicationController
-  before_action :set_blog, only: [:show]
+  before_action :set_blog, only: [:show, :edit, :update, :destroy]
 
-  # GET /blogs or /blogs.json
+  # GET /blogs
   def index
     @blogs = Blog.all
   end
 
-  # GET /blogs/1 or /blogs/1.json
+  # GET /blogs/1
   def show
-    @blog = Blog.find_by(slug: params[:slug])
     @documents = @blog.documents
   end
-  
 
   # GET /blogs/new
   def new
@@ -20,42 +18,32 @@ class BlogsController < ApplicationController
 
   # GET /blogs/1/edit
   def edit
-    @blog = Blog.find(params[:slug])
   end
 
-  # POST /blogs or /blogs.json
+  # POST /blogs
   def create
     @blog = Blog.new(blog_params)
 
-    respond_to do |format|
-      if @blog.save
-        format.html { redirect_to blog_url(@blog), notice: "Blog was successfully created." }
-        format.json { render :show, status: :created, location: @blog }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
-      end
+    if @blog.save
+      redirect_to blog_path(slug: @blog.slug), notice: "Blog was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /blogs/1 or /blogs/1.json
+  # PATCH/PUT /blogs/1
   def update
-    respond_to do |format|
-      if @blog.update(blog_params)
-        format.html { redirect_to blog_url(@blog), notice: "Blog was successfully updated." }
-        format.json { render :show, status: :ok, location: @blog }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @blog.errors, status: :unprocessable_entity }
-      end
+    if @blog.update(blog_params)
+      redirect_to blog_path(slug: @blog.slug), notice: "Blog was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  # DELETE /blogs/1 or /blogs/1.json
+  # DELETE /blogs/1
   def destroy
-    @blog = Blog.find(params[:slug])
-    @blog.destroy!
-
+    @blog = Blog.find_by(slug: params[:slug])
+    @blog.destroy
     respond_to do |format|
       format.html { redirect_to blogs_url, notice: "Blog was successfully destroyed." }
       format.json { head :no_content }
@@ -63,18 +51,20 @@ class BlogsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_blog
-      @blog = Blog.find_by(slug: params[:slug])
-      unless @blog
-        # Handle the case when the blog post with the given slug is not found
-        # For example, you can redirect to a 404 page or render a specific error message
-        render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
-      end
-    end
 
-    # Only allow a list of trusted parameters through.
-    def blog_params
-      params.require(:blog).permit(:title, :body, :author, :slug, :published_at, :category, :featured_image, :status, :views, :likes, :comments_count, :meta_title, :meta_description, :meta_keywords)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_blog
+    @blog = Blog.find_by(slug: params[:slug])
+    render_not_found unless @blog
+  end  
+
+  # Only allow a list of trusted parameters through.
+  def blog_params
+    params.require(:blog).permit(:title, :body, :author, :slug, :published_at, :category, :featured_image, :status, :views, :likes, :comments_count, :meta_title, :meta_description, :meta_keywords)
+  end
+
+  # Helper method to render 404 page if blog is not found
+  def render_not_found
+    render file: "#{Rails.root}/public/404.html", status: :not_found, layout: false
+  end
 end
